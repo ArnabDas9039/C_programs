@@ -178,14 +178,13 @@ void deleteany(){
 	}
 }
 void reverselist(){
-	node *s=head;
 	node *rhead;
+	node *s=head;
 	while(s->link!=NULL){
 		s=s->link;
 	}
 	rhead=s;
 	while(head->link!=NULL){
-		node *s=head;
 		node *pre1=head;
 		while(s->link!=NULL){
 			pre1=s;
