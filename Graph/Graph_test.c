@@ -6,41 +6,51 @@ typedef struct edge{
 	int dest;
 	struct edge *link;
 }edge;
-typedef struct graph{
-	
-}
 int n=7;
-int front=-1, rear=-1;
-bool visit[7];
+int rear=-1;
+bool visit[] = {false, false, false, false, false, false, false};
 edge *graph[7];
-int q[14];
-void enqueue(int *q, edge *s){
-	if(front == -1){
-		front=0;
-	}
-	q[++rear] = s->dest;
-	printf("\nenqueue(%d). Rear is %d",s->dest,rear);
+edge *q[14];
+void enqueue(edge **q, edge *s){
+	q[++rear] = s;
+	// if(q[rear]==NULL){
+	// 	printf("\nenqueue(-1)");
+	// }
+	// else{
+	// 	printf("\nenqueue(%d)",q[rear]->dest);
+	// }
 	return;
 }
-int dequeue(int *q){
-	int x = q[0];
+edge *dequeue(edge **q){
+	edge *ptr = q[0];
 	for(int i=1; i<=rear; i++){
 		q[i-1]=q[i];
 	}
+	q[rear]=NULL;
 	rear--;
-	printf("\ndequeue(%d). Rear is %d",x,rear);
-	return x;
+	// if(ptr==NULL){
+	// 	printf("\ndequeue(-1)");
+	// }
+	// else{
+	// 	printf("\ndequeue(%d)",ptr->dest);
+	// }
+	return ptr;
 }
-bool isempty(int *q){
+bool isempty(){
 	if(rear==-1){
-		return false;
+		return true;
 	}
-	return true;
+	return false;
 }
-void qdisplay(int *q){
+void qdisplay(){
 	printf("\nQ: ");
 	for(int i=0; i<=rear; i++){
-		printf("%d->(%d) ",i,q[i]);
+		if(q[i]==NULL){
+			printf("-1 ");
+		}
+		else{
+			printf("%d ",q[i]->dest);
+		}
 	}
 }
 void append(int src, int dest){
@@ -49,14 +59,18 @@ void append(int src, int dest){
 	p->dest=dest;
 	p->link=NULL;
 	if(graph[src]==NULL){
-		graph[src]=p;
+		edge *vertex = malloc(sizeof(edge));
+		vertex->src = src;
+		vertex->dest = src;
+		vertex->link = p;
+		graph[src]=vertex;
 	}
-	else if(p->dest < graph[src]->dest){
-		p->link = graph[src];
-		graph[src]=p;
+	else if(p->dest < graph[src]->link->dest){
+		p->link = graph[src]->link;
+		graph[src]->link=p;
 	}
 	else{
-		for(edge *list = graph[src]; list != NULL; list=list->link){
+		for(edge *list = graph[src]->link; list != NULL; list=list->link){
 			if(list->link == NULL){
 				list->link = p;
 				break;
@@ -77,7 +91,6 @@ void addedge(int u, int v){
 void display(){
 	edge *value;
 	for(int i=0; i<n; i++){
-		printf("%d => ",i);
 		value = graph[i];
 		while(value!=NULL){
 			printf("%d => ",value->dest);
@@ -98,22 +111,17 @@ void dfs(int index){
 		value = value->link;
 	}
 }
-void bfs(int *q){
-	enqueue(q, graph[0]);
-	qdisplay(q);
-	while(!isempty(q)){
-		printf("\nQueue isn't empty.");
-		int dq = dequeue(q);
-		edge *value = graph[dq];
-		qdisplay(q);
-		if(visit[dq] == false){
+void bfs(int index){
+	enqueue(q, graph[index]);
+	while(!isempty()){
+		edge *value = dequeue(q);
+		if(visit[value->dest] == false){
 			printf("%d ", value->dest);
-			visit[dq] = true;
-			qdisplay(q);
-			while(value->link!=NULL){
-				value = value->link;
+			visit[value->dest] = true;
+			value = graph[value->dest];
+			while(value!=NULL){
 				enqueue(q, value);
-				qdisplay(q);
+				value = value->link;
 			}
 		}
 		free(value);
@@ -123,38 +131,32 @@ void bfs(int *q){
 int main(){
 	//edge *graph[n];
 	//0
-	addedge(0, 0);
 	addedge(0, 1);
+	//printf("0 => %d => %d\n",graph[0]->dest, graph[0]->link->dest);
 	addedge(0, 2);
 	//printf("0 => %d",graph[0]->dest);
-	//printf("0 => %d => %d\n",graph[0]->dest, graph[0]->link->dest);
 	//1
-	addedge(1, 1);
 	addedge(1, 0);
 	addedge(1, 3);
 	//2
-	addedge(2, 2);
 	addedge(2, 0);
 	addedge(2, 4);
 	//3
-	addedge(3, 3);
 	addedge(3, 1);
 	addedge(3, 4);
 	addedge(3, 5);
 	//4
-	addedge(4, 4);
 	addedge(4, 2);
 	addedge(4, 3);
 	addedge(4, 5);
 	//5
-	addedge(5, 5);
 	addedge(5, 3);
 	addedge(5, 4);
 	addedge(5, 6);
 	//6
-	addedge(6, 6);
 	addedge(6, 5);
 	display();
-	bfs(q);
+	//dfs(0);
+	bfs(1);
 	return 0;
 }
