@@ -1,4 +1,4 @@
-#include<stdio.h>	
+#include<stdio.h>
 #include<stdlib.h>
 typedef struct node{
 	int data;
@@ -77,8 +77,8 @@ void insertany(){
 					return;
 				}
 				else{
-					p=s;	
-					s=s->link;	
+					p=s;
+					s=s->link;
 					i++;
 				}
 			}
@@ -90,7 +90,7 @@ void insertany(){
 }
 void insertorder(){
 	int k;
-	node *value=malloc(sizeof(node)),*s;
+	node *value=malloc(sizeof(node));
 	printf("Enter value: ");
 	scanf("%d",&k);
 	value->data=k;
@@ -166,8 +166,8 @@ void deleteany(){
 					return;
 				}
 				else{
-					value=s;	
-					s=s->link;	
+					value=s;
+					s=s->link;
 					i++;
 				}
 			}
@@ -178,14 +178,13 @@ void deleteany(){
 	}
 }
 void reverselist(){
-	node *s=head;
 	node *rhead;
+	node *s=head;
 	while(s->link!=NULL){
 		s=s->link;
 	}
 	rhead=s;
 	while(head->link!=NULL){
-		node *s=head;
 		node *pre1=head;
 		while(s->link!=NULL){
 			pre1=s;
@@ -231,7 +230,7 @@ int main(){
 			case 6: deleteany();break;
 			case 7: reverselist();break;
 			case 8: convertlist();break;
-			case 10: exit(0);					
+			case 10: exit(0);
 			default: printf("\nPlease enter a valid choice");
 		}
 	}
