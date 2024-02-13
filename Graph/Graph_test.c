@@ -124,7 +124,6 @@ void bfs(int index){
 				value = value->link;
 			}
 		}
-		free(value);
 	}
 	return;
 }
