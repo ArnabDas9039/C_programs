@@ -15,19 +15,5 @@ int main(){
 	printf("Unsigned Character \t%d \t0 \t\t\t%d \t\t\tc\n",sizeof(unsigned char),UCHAR_MAX);
 	printf("Float \t\t\t%d \t%.16e %.16e f\n",sizeof(float),FLT_MIN,FLT_MAX);
 	printf("Double \t\t\t%d \t%.16e %.16e lf\n",sizeof(double),DBL_MIN,DBL_MAX);
-	printf("Long Double \t\t%d \t%.16e %.16e Lf\n",sizeof(double),LDBL_MIN,LDBL_MAX);
 	return 0;
 }
-// Data Type               Size    Minimum                 Maximum                 Format Specifier
-// Short Int               2       -32768                  32767                   hd
-// Unsigned Short Int      2       0                       65535                   hu
-// Int                     4       -2147483648             2147483647              d
-// Unsigned Int            4       0                       4294967295              u
-// Long Int                4       -2147483648             2147483647              ld
-// Unsigned Long Int       4       0                       4294967295              lu
-// Long Long Int           8       -9223372036854775808    9223372036854775807     lld
-// Unsigned Long Long Int  8       0                       18446744073709551615    llu
-// Character               1       -128                    127                     c
-// Unsigned Character      1       0                       255                     c
-// Float                   4       1.1754943508222875e-038 3.4028234663852886e+038 f
-// Double                  8       2.2250738585072014e-308 1.7976931348623157e+308 lf
