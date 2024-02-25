@@ -1,8 +1,10 @@
 #include<stdio.h>
 int main(){
     float n;
-    scanf("%6f",&n);
-    printf("n_is_%0.2f",n);
+    char c;
+    scanf("%f%c",&n,&c);
+    printf("n_is_%f\n",n);
+    printf("c_is_%c\n",c);
     // char str[] = "abcdefghijklmnopqrstuvwxyz";
     // printf("%40s\n", str);
     // printf("%-40s\n", str);
@@ -11,7 +13,7 @@ int main(){
 }
 // function to check even or not 
 // void checkEvenOrNot(int num) 
-// { 
+// {
 //     if (num % 2 == 0) 
 //         // jump to even 
 //         goto even; 

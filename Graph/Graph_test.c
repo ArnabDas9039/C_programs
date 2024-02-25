@@ -6,11 +6,11 @@ typedef struct edge{
 	int dest;
 	struct edge *link;
 }edge;
+edge *graph[7];
+edge *q[14];
 int n=7;
 int rear=-1;
 bool visit[] = {false, false, false, false, false, false, false};
-edge *graph[7];
-edge *q[14];
 void enqueue(edge **q, edge *s){
 	q[++rear] = s;
 	// if(q[rear]==NULL){
@@ -156,6 +156,6 @@ int main(){
 	addedge(6, 5);
 	display();
 	//dfs(0);
-	bfs(1);
+	bfs(0);
 	return 0;
 }
