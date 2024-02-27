@@ -1,8 +1,23 @@
-// #include<stdio.h>
+#include<stdio.h>
 // #include<string.h>
-// // #include<stdlib.h>
-// // #undef malloc;
+// #include<stdlib.h>
+// #undef malloc;
 int main(){
+    //char *c = "white";
+    char c = 'a';
+    //printf("Player 1: ");
+    // scanf("%c",c);
+    // printf("Player 2: ");
+    // scanf("%s",d);
+    // printf("%d",sizeof(c));
+    for(int i=0; i<sizeof(c); i++){
+        // printf("%c",c[i]);
+        printf("%c",c);
+    }
+    // printf("\n");
+    // for(int i=0; i<sizeof(d); i++){
+    //     printf("%c",d[i]);
+    // }
 //     //int a[4] = {0,1,2,3};
 //     // char b = '0';
     // int c = 4, b=2;
@@ -16,7 +31,10 @@ int main(){
 //     if(4){
 //         printf("4\n");
 //     }
-    return 0;
+    // int j;
+    // int t = (scanf("%d",&j),printf("%d\n",j));
+    // printf("%d\n",t);
+    // return 0;
 }
 // #include <stdio.h>
 // int main()
