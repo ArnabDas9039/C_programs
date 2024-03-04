@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include <stdbool.h>
 typedef struct node
 {
@@ -8,7 +9,7 @@ typedef struct node
 	struct node *right;
 } node;
 node *root = NULL;
-int front = -1, rear = -1;
+int rear = -1;
 int top = -1;
 int maximum(int a, int b)
 {
@@ -20,10 +21,6 @@ int maximum(int a, int b)
 }
 void enqueue(node **q, node *s)
 {
-	if (front == -1)
-	{
-		front = 0;
-	}
 	q[++rear] = s;
 	return;
 }
@@ -59,28 +56,16 @@ int count(node *s)
 		return 0;
 	}
 }
-int height(node *s)
+void displayinorder(node *s)
 {
 	if (s == NULL)
 	{
-		return 0;
+		printf("-1, ");
+		return;
 	}
-	if (height(s->left) > height(s->right))
-	{
-		return height(s->left) + 1;
-	}
-	else
-	{
-		return height(s->right) + 1;
-	}
-}
-int calcdiameter(node *s)
-{
-	if (s == NULL)
-	{
-		return 0;
-	}
-	return maximum(maximum(diameter(s->left), diameter(s->right)), height(s->left) + height(s->right) + 1);
+	displayinorder(s->left);
+	printf("%d, ", s->number);
+	displayinorder(s->right);
 }
 void displaypreorder(node *s)
 {
@@ -93,16 +78,16 @@ void displaypreorder(node *s)
 	displaypreorder(s->left);
 	displaypreorder(s->right);
 }
-void displayinorder(node *s)
+void displaypostorder(node *s)
 {
 	if (s == NULL)
 	{
 		printf("-1, ");
 		return;
 	}
-	displayinorder(s->left);
+	displaypreorder(s->left);
+	displaypreorder(s->right);
 	printf("%d, ", s->number);
-	displayinorder(s->right);
 }
 void displaylevelorder(node *s, node **q)
 {
@@ -151,18 +136,50 @@ node *insertrec(int *a)
 	ptr->left = insertrec(a);
 	ptr->right = insertrec(a);
 }
+int nodenumber(int n)
+{
+	if (n == -1)
+	{
+		return 0;
+	}
+	return (int) pow(2, n) + nodenumber(n - 1);
+}
 void insertpreorder()
 {
 	int n, *a;
 	printf("Enter the height: ");
 	scanf("%d", &n);
+	n = nodenumber(n);
 	a = malloc(n * sizeof(int));
-	printf("Enter the preorder array: ");
+	printf("Enter the preorder array with %d values: ", n);
 	for (int i = 0; i < n; i++)
 	{
 		scanf("%d", (a + i));
 	}
 	root = insertrec(a);
+}
+int height(node *s)
+{
+	if (s == NULL)
+	{
+		return 0;
+	}
+	if (height(s->left) > height(s->right))
+	{
+		return height(s->left) + 1;
+	}
+	else
+	{
+		return height(s->right) + 1;
+	}
+}
+int diameter(node *s)
+{
+	if (s == NULL)
+	{
+		return 0;
+	}
+	return maximum(maximum(diameter(s->left), diameter(s->right)), height(s->left) + height(s->right) + 1);
 }
 int main()
 {
@@ -174,12 +191,9 @@ int main()
 		printf("\n Enter 1 to display preorder ");
 		printf("\n Enter 2 to display postorder ");
 		printf("\n Enter 3 to display levelorder ");
-		printf("\n Enter 4 to insert at an empty position ");
-		printf("\n Enter 5 to insert at specific position ");
-		printf("\n Enter 6 to insert by an inorder array ");
-		printf("\n Enter 7 to delete any position ");
-		printf("\n Enter 8 to delete any value ");
-		printf("\n Enter 9 to find diameter ");
+		printf("\n Enter 4 to insert by an inorder array ");
+		printf("\n Enter 5 to find diameter ");
+		printf("\n Enter 6 to find height ");
 		printf("\n Enter 10 to exit\n ");
 		printf("\nEnter choice: ");
 		scanf("%d", &choice);
@@ -198,22 +212,13 @@ int main()
 			displaylvlorder(root);
 			break;
 		case 4:
-			insertrand();
-			break;
-		case 5:
-			insertspec();
-			break;
-		case 6:
 			insertpreorder();
 			break;
-		case 7:
-			deleteanypos();
+		case 5:
+			diameter(root);
 			break;
-		case 8:
-			deleteanyval();
-			break;
-		case 9:
-			diameter();
+		case 6:
+			height(root);
 			break;
 		case 10:
 			exit(0);
