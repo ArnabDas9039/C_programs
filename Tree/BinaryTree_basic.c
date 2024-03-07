@@ -1,65 +1,51 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <stdbool.h>
-typedef struct node
-{
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+#include<stdbool.h>
+typedef struct node{
 	int number;
-	struct node *left;
-	struct node *right;
+	struct node* left;
+	struct node* right;
 } node;
-node *root = NULL;
+node* root = NULL;
 int rear = -1;
 int top = -1;
-int maximum(int a, int b)
-{
-	if (a > b)
-	{
+int maximum(int a, int b){
+	if(a > b){
 		return a;
 	}
 	return b;
 }
-void enqueue(node **q, node *s)
-{
+void enqueue(node** q, node* s){
 	q[++rear] = s;
 	return;
 }
-node *dequeue(node **q)
-{
-	node *ptr = *q;
-	for (int i = 1; i <= rear; i++)
-	{
+node* dequeue(node** q){
+	node* ptr = *q;
+	for(int i = 1; i <= rear; i++){
 		q[i - 1] = q[i];
 	}
 	rear--;
 	return ptr;
 }
-bool isempty(node **q)
-{
-	for (int i = 0; i < rear; i++)
-	{
-		if (q[i] != NULL)
-		{
+bool isempty(node** q){
+	for(int i = 0; i < rear; i++){
+		if(q[i] != NULL){
 			return false;
 		}
 	}
 	return true;
 }
-int count(node *s)
-{
-	if (s != NULL)
-	{
+int count(node* s){
+	if(s != NULL){
 		return count(s->left) + count(s->right) + 1;
 	}
-	else
-	{
+	else{
 		return 0;
 	}
 }
-void displayinorder(node *s)
-{
-	if (s == NULL)
-	{
+void displayinorder(node* s){
+	if(s == NULL){
 		printf("-1, ");
 		return;
 	}
@@ -67,10 +53,8 @@ void displayinorder(node *s)
 	printf("%d, ", s->number);
 	displayinorder(s->right);
 }
-void displaypreorder(node *s)
-{
-	if (s == NULL)
-	{
+void displaypreorder(node* s){
+	if(s == NULL){
 		printf("-1, ");
 		return;
 	}
@@ -78,10 +62,8 @@ void displaypreorder(node *s)
 	displaypreorder(s->left);
 	displaypreorder(s->right);
 }
-void displaypostorder(node *s)
-{
-	if (s == NULL)
-	{
+void displaypostorder(node* s){
+	if(s == NULL){
 		printf("-1, ");
 		return;
 	}
@@ -89,103 +71,81 @@ void displaypostorder(node *s)
 	displaypreorder(s->right);
 	printf("%d, ", s->number);
 }
-void displaylevelorder(node *s, node **q)
-{
+void displaylevelorder(node* s, node** q){
 	printf("\nLevelorder: ");
 	enqueue(q, s);
 	enqueue(q, NULL);
-	while (!isempty(q))
-	{
-		node *curr = dequeue(q);
-		if (curr == NULL)
-		{
-			if (isempty(q))
-			{
+	while(!isempty(q)){
+		node* curr = dequeue(q);
+		if(curr == NULL){
+			if(isempty(q)){
 				break;
 			}
 			enqueue(q, NULL);
 		}
-		else
-		{
+		else{
 			printf("%d ", curr->number);
-			if (curr->left != NULL)
-			{
+			if(curr->left != NULL){
 				enqueue(q, curr->left);
 			}
-			if (curr->right != NULL)
-			{
+			if(curr->right != NULL){
 				enqueue(q, curr->right);
 			}
 		}
 	}
 }
-void displaylvlorder(node *s)
-{
-	node **q = malloc(count(s) * sizeof(node));
+void displaylvlorder(node* s){
+	node** q = malloc(count(s) * sizeof(node));
 	displaylevelorder(s, q);
 }
-node *insertrec(int *a)
-{
+node* insertrec(int* a){
 	top++;
-	if (a[top] == -1)
-	{
+	if(a[top] == -1){
 		return NULL;
 	}
-	node *ptr = malloc(sizeof(node));
+	node* ptr = malloc(sizeof(node));
 	ptr->number = a[top];
 	ptr->left = insertrec(a);
 	ptr->right = insertrec(a);
 }
-int nodenumber(int n)
-{
-	if (n == -1)
-	{
+int nodenumber(int n){
+	if(n == -1){
 		return 0;
 	}
-	return (int) pow(2, n) + nodenumber(n - 1);
+	return (int)pow(2, n) + nodenumber(n - 1);
 }
-void insertpreorder()
-{
-	int n, *a;
+void insertpreorder(){
+	int n, * a;
 	printf("Enter the height: ");
 	scanf("%d", &n);
 	n = nodenumber(n);
 	a = malloc(n * sizeof(int));
 	printf("Enter the preorder array with %d values: ", n);
-	for (int i = 0; i < n; i++)
-	{
+	for(int i = 0; i < n; i++){
 		scanf("%d", (a + i));
 	}
 	root = insertrec(a);
 }
-int height(node *s)
-{
-	if (s == NULL)
-	{
+int height(node* s){
+	if(s == NULL){
 		return 0;
 	}
-	if (height(s->left) > height(s->right))
-	{
+	if(height(s->left) > height(s->right)){
 		return height(s->left) + 1;
 	}
-	else
-	{
+	else{
 		return height(s->right) + 1;
 	}
 }
-int diameter(node *s)
-{
-	if (s == NULL)
-	{
+int diameter(node* s){
+	if(s == NULL){
 		return 0;
 	}
 	return maximum(maximum(diameter(s->left), diameter(s->right)), height(s->left) + height(s->right) + 1);
 }
-int main()
-{
+int main(){
 	int choice;
-	while (1)
-	{
+	while(1){
 		printf("\n\nBINARY TREE MENU\n");
 		printf("\n Enter 0 to display inorder ");
 		printf("\n Enter 1 to display preorder ");
@@ -197,8 +157,7 @@ int main()
 		printf("\n Enter 10 to exit\n ");
 		printf("\nEnter choice: ");
 		scanf("%d", &choice);
-		switch (choice)
-		{
+		switch(choice){
 		case 0:
 			displayinorder(root);
 			break;

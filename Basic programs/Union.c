@@ -14,7 +14,7 @@ union student{
 };
 int main(){
 	union student s;
-	printf("Size of stucture is %d",sizeof(s));//sizeof calculates the memory allocated size of the datatype
+	printf("Size of stucture is %d", sizeof(s));//sizeof calculates the memory allocated size of the datatype
 	return 0;
 	getch();
 }

@@ -1,8 +1,7 @@
-#include <stdio.h>
-#include <limits.h>
-#include <float.h>
-int main()
-{
+#include<stdio.h>
+#include<limits.h>
+#include<float.h>
+int main(){
 	printf("Data Type \t\tSize \tMinimum \t\tMaximum \t\tFormat Specifier\n");
 	printf("Short Int \t\t%d \t%hd \t\t\t%hd \t\t\thd\n", sizeof(short int), SHRT_MIN, SHRT_MAX);
 	printf("Unsigned Short Int \t%d \t0 \t\t\t%hu \t\t\thu\n", sizeof(unsigned short int), USHRT_MAX);

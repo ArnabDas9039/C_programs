@@ -18,19 +18,19 @@ int main(){
 	//struct student s1, s2, s3;
 	int i;
 	//input of data 3 times
-	for(i=0;i<=2;i++){
+	for(i = 0;i <= 2;i++){
 		printf("Enter student roll = ");
-		scanf("%d",&s[i].roll);
+		scanf("%d", &s[i].roll);
 		printf("Enter the student name = ");
 		fflush(stdin);//clear of buffer memory stdin->standard input
 		gets(s[i].name);
 		printf("Enter the marks = ");
-		scanf("%f",&s[i].mark);
+		scanf("%f", &s[i].mark);
 	}
 	printf("\n Student details are ");
 	//output of data 3 times
-	for (i=0;i<=2;i++){
-		printf("\n%d	%s	%f",s[i].roll,s[i].name,s[i].mark);
+	for(i = 0;i <= 2;i++){
+		printf("\n%d	%s	%f", s[i].roll, s[i].name, s[i].mark);
 	}
 	//return 0;
 	getch();

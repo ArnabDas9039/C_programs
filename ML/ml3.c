@@ -4,9 +4,9 @@
 #define input 9
 #define move 9
 float gamerules(int cm);
-int count=0;
+int count = 0;
 int board[3][3];
-float wb[output][input+1][move]/*={{{2.700090, -3.242493, -3.206730, -3.129244, -3.194809, -2.920628, -2.662838, -2.376735, -2.254918, },
+float wb[output][input + 1][move]/*={{{2.700090, -3.242493, -3.206730, -3.129244, -3.194809, -2.920628, -2.662838, -2.376735, -2.254918, },
 {-4.118681, 10.335445, -1.436472, -1.281500, -1.168251, -1.096725, -1.055002, -0.950694, -0.858307, },
 {-1.525879, -2.861023, 10.290742, -1.481175, -1.457334, -1.147389, -1.002848, -1.007318, -0.932813, },
 {-0.703335, -1.740456, -1.847744, 9.924173, -1.567602, -1.430511, -1.269579, -1.308322, -1.088530, },
@@ -107,45 +107,45 @@ float wb[output][input+1][move]/*={{{2.700090, -3.242493, -3.206730, -3.129244, 
 },}*/;
 int a[input]/*={4, 3, 1, 7, 0, 6, 8, 2, 5}*/;
 float a1[input][move], b1[output][move], b2[output][move];
-float gradc[output][input+1][move];
+float gradc[output][input + 1][move];
 void restart(){
-	for(int cm=0; cm<move; cm++){
-		for(int i=0; i<output; i++){
-			a[i]=-1;
-			a1[i][cm]=0;
-			b1[i][cm]=0;
+	for(int cm = 0; cm < move; cm++){
+		for(int i = 0; i < output; i++){
+			a[i] = -1;
+			a1[i][cm] = 0;
+			b1[i][cm] = 0;
 		}
 	}
 }
 void display(){
-	for(int i=0; i<3; i++){
-		for(int j=0; j<3; j++){
-			printf("%d",board[i][j]);
+	for(int i = 0; i < 3; i++){
+		for(int j = 0; j < 3; j++){
+			printf("%d", board[i][j]);
 		}
 	}
 }
 void displaya1(/*int cm*/){
 	printf("\nDisplaying a1 ...\n");
-	for(int cm=0; cm<move; cm++){
-	for(int j=0; j<input; j++){
-		printf("%f ",a1[j][cm]);
-	}printf("\n");
+	for(int cm = 0; cm < move; cm++){
+		for(int j = 0; j < input; j++){
+			printf("%f ", a1[j][cm]);
+		}printf("\n");
 	}
 }
 void displayb(){
 	printf("\nDisplaying b1 ...\n");
-	for(int cm=0; cm<move; cm++){
-		for(int i=0; i<output; i++){
-			printf("%f ",b1[i][cm]);
+	for(int cm = 0; cm < move; cm++){
+		for(int i = 0; i < output; i++){
+			printf("%f ", b1[i][cm]);
 		}
 		printf("\n");
 	}
 }
 void displayb2(){
 	printf("\nDisplaying b2 ...\n");
-	for(int cm=0; cm<move; cm++){
-		for(int i=0; i<output; i++){
-			printf("%f ",b2[i][cm]);
+	for(int cm = 0; cm < move; cm++){
+		for(int i = 0; i < output; i++){
+			printf("%f ", b2[i][cm]);
 		}
 		printf("\n");
 	}
@@ -153,12 +153,12 @@ void displayb2(){
 void displaywb(){
 	printf("\nDisplaying wb ...\n");
 	printf("{");
-	for(int cm=0; cm<move; cm++){
+	for(int cm = 0; cm < move; cm++){
 		printf("{");
-		for(int j=0; j<=input; j++){
+		for(int j = 0; j <= input; j++){
 			printf("{");
-			for(int i=0; i<output; i++){
-				printf("%f, ",wb[i][j][cm]);
+			for(int i = 0; i < output; i++){
+				printf("%f, ", wb[i][j][cm]);
 			}
 			printf("},\n");
 		}
@@ -167,49 +167,49 @@ void displaywb(){
 	printf("}\n");
 }
 void createb2(){
-	for(int cm=0; cm<move; cm++){
-		for(int i=0; i<output; i++){
-			b2[i][cm]=0;
+	for(int cm = 0; cm < move; cm++){
+		for(int i = 0; i < output; i++){
+			b2[i][cm] = 0;
 		}
 	}
-	for(int i=0; i<output; i++){
-		b2[i][a[i]]=1;
-		if(gamerules(8)==1){
+	for(int i = 0; i < output; i++){
+		b2[i][a[i]] = 1;
+		if(gamerules(8) == 1){
 			printf("\nLost");
-			b2[i][a[i]]=-1;
+			b2[i][a[i]] = -1;
 		}
 	}
 }
 void createa1(int cm){
-	for(int j=0; j<input; j++){
-		if((a[j]==cm && cm%2==0) || a1[j][cm-1]==1){
+	for(int j = 0; j < input; j++){
+		if((a[j] == cm && cm % 2 == 0) || a1[j][cm - 1] == 1){
 			//printf("\nX is in place.");
-			a1[j][cm]=1;
+			a1[j][cm] = 1;
 		}
-		else if((a[j]==cm && cm%2!=0) || a1[j][cm-1]==-1){
+		else if((a[j] == cm && cm % 2 != 0) || a1[j][cm - 1] == -1){
 			//printf("\nO is in place.");
-			a1[j][cm]=-1;
+			a1[j][cm] = -1;
 		}
 	}
 	//displaya1(cm);
 }
 float calculateb(int i, int cm){//cm is current move number
-	float sum=0;
-	for(int j=0; j<input; j++){
-		sum=sum+(a1[j][cm]*wb[i][j][cm]);
+	float sum = 0;
+	for(int j = 0; j < input; j++){
+		sum = sum + (a1[j][cm] * wb[i][j][cm]);
 	}
-	return 1/(1+exp(-(sum+wb[i][9][cm])));
+	return 1 / (1 + exp(-(sum + wb[i][9][cm])));
 }
 void createb1(int cm){
-	for(int i=0; i<output; i++){
-		b1[i][cm]=calculateb(i, cm);
+	for(int i = 0; i < output; i++){
+		b1[i][cm] = calculateb(i, cm);
 	}
 	//displayb();
 }
 float costfunction(int cm){
-	float c=0;
-	for(int i=0; i<output; i++){
-		c=c+pow((b1[i][cm]-b2[i][cm]),2);
+	float c = 0;
+	for(int i = 0; i < output; i++){
+		c = c + pow((b1[i][cm] - b2[i][cm]), 2);
 	}
 	//printf("\nCost = %f",c);
 	return c;
@@ -217,23 +217,23 @@ float costfunction(int cm){
 void gradientc(){
 	float c1[move];
 	float c2[move];
-	for(int cm=0; cm<move; cm++){
-		c1[cm]=costfunction(cm);
-		for(int j=0; j<=input; j++){
-			for(int i=0; i<output; i++){
-				float x=wb[i][j][cm], y=b1[i][cm];
-				wb[i][j][cm]=wb[i][j][cm]+0.00001;
-				b1[i][cm]=calculateb(i, cm);
-				c2[cm]=costfunction(cm);
-				gradc[i][j][cm]=(c2[cm]-c1[cm])/0.00001;
-				wb[i][j][cm]=x;
-				b1[i][cm]=y;	
+	for(int cm = 0; cm < move; cm++){
+		c1[cm] = costfunction(cm);
+		for(int j = 0; j <= input; j++){
+			for(int i = 0; i < output; i++){
+				float x = wb[i][j][cm], y = b1[i][cm];
+				wb[i][j][cm] = wb[i][j][cm] + 0.00001;
+				b1[i][cm] = calculateb(i, cm);
+				c2[cm] = costfunction(cm);
+				gradc[i][j][cm] = (c2[cm] - c1[cm]) / 0.00001;
+				wb[i][j][cm] = x;
+				b1[i][cm] = y;
 			}
 		}
 	}
 }
 void backprop(){
-	for(int cm=0; cm<move; cm++){
+	for(int cm = 0; cm < move; cm++){
 		createa1(cm);
 		createb1(cm);
 	}
@@ -241,31 +241,31 @@ void backprop(){
 	displaya1();
 	displayb();
 	gradientc();
-	for(int cm=0; cm<move; cm++){
-		for(int j=0; j<=input; j++){
-			for(int i=0; i<output; i++){
-				wb[i][j][cm]=wb[i][j][cm]-gradc[i][j][cm];	
+	for(int cm = 0; cm < move; cm++){
+		for(int j = 0; j <= input; j++){
+			for(int i = 0; i < output; i++){
+				wb[i][j][cm] = wb[i][j][cm] - gradc[i][j][cm];
 			}
 		}
 	}
 	//displayb2();
 	//displaywb();
-	for(int cm=0; cm<move; cm++){
+	for(int cm = 0; cm < move; cm++){
 		createb1(cm);
-		for(int j=0; j<input; j++){
-			a1[j][cm]=0;
+		for(int j = 0; j < input; j++){
+			a1[j][cm] = 0;
 		}
 	}
 }
-void arrayconvert(int *array){
-	int t=0;
-	for(int i=0; i<3; i++){
-		for(int j=0; j<3; j++){
-			if(array[t]%2==0){
-				board[i][j]=array[t];
+void arrayconvert(int* array){
+	int t = 0;
+	for(int i = 0; i < 3; i++){
+		for(int j = 0; j < 3; j++){
+			if(array[t] % 2 == 0){
+				board[i][j] = array[t];
 			}
 			else{
-				board[i][j]=(-1)*array[t];
+				board[i][j] = (-1) * array[t];
 			}
 			t++;
 		}
@@ -273,136 +273,136 @@ void arrayconvert(int *array){
 }
 float gamerules(int cm){
 	//printf("\nEntered gamerules.");
-	for(int i=0; i<9; i=i+3){
+	for(int i = 0; i < 9; i = i + 3){
 		//printf("\nHorizontal loop at %d",i);
-		if(a1[i][cm]==a1[i+1][cm] && a1[i][cm]==a1[i+2][cm] && a1[i][cm]!=0){
+		if(a1[i][cm] == a1[i + 1][cm] && a1[i][cm] == a1[i + 2][cm] && a1[i][cm] != 0){
 			//printf("\nHorizontal win");
 			return a1[i][cm];
 		}
 	}
-	for(int i=0; i<3; i++){
+	for(int i = 0; i < 3; i++){
 		//printf("\nVertical loop at %d",i);
-		if(a1[i][cm]==a1[i+3][cm] && a1[i][cm]==a1[i+6][cm]&& a1[i][cm]!=0){
+		if(a1[i][cm] == a1[i + 3][cm] && a1[i][cm] == a1[i + 6][cm] && a1[i][cm] != 0){
 			//printf("\nVertical win");
 			return a1[i][cm];
 		}
 	}
 	//printf("\nChecking diagonal");
-	if((a1[0][cm]==a1[4][cm]&& a1[0][cm]==a1[8][cm] && a1[0][cm]!=0) || (a1[2][cm]==a1[4][cm] && a1[2][cm]==a1[6][cm] && a1[2][cm]!=0)){
+	if((a1[0][cm] == a1[4][cm] && a1[0][cm] == a1[8][cm] && a1[0][cm] != 0) || (a1[2][cm] == a1[4][cm] && a1[2][cm] == a1[6][cm] && a1[2][cm] != 0)){
 		//printf("\nDiagonal win");
 		return a1[4][cm];
 	}
 	return 0;
 }
-void permute(int *array, int start, int end) {
-	if (start==end) {
-		for (int i=0; i<end; i++) {
-			a[i]=array[i];
+void permute(int* array, int start, int end){
+	if(start == end){
+		for(int i = 0; i < end; i++){
+			a[i] = array[i];
 		}
-		printf("\n%d",count);
+		printf("\n%d", count);
 		backprop();
 		count++;
-	} 
-	else {
-    // Recursively permute the array, starting at the next index.
-    	for (int i = start; i < end; i++) {
-		    int temp = array[start];
-		    array[start] = array[i];
-		    array[i] = temp;
-		    permute(array, start + 1, end);
-		    temp = array[start];
-		    array[start] = array[i];
-		    array[i] = temp;
-	    }
+	}
+	else{
+		// Recursively permute the array, starting at the next index.
+		for(int i = start; i < end; i++){
+			int temp = array[start];
+			array[start] = array[i];
+			array[i] = temp;
+			permute(array, start + 1, end);
+			temp = array[start];
+			array[start] = array[i];
+			array[i] = temp;
+		}
 	}
 }
 void allgames(){
 	int array[9];
-	for(int i=0; i<9; i++){
-		array[i]=i;
+	for(int i = 0; i < 9; i++){
+		array[i] = i;
 	}
 	//permute(array, 0, 9);
-	for (int i=0; i<9; i++) {
-		a[i]=array[i];
+	for(int i = 0; i < 9; i++){
+		a[i] = array[i];
 	}
-	printf("\n%d",count);
+	printf("\n%d", count);
 	backprop();
 	count++;
-	array[6]=8; array[8]=6;
-	for (int i=0; i<9; i++) {
-		a[i]=array[i];
+	array[6] = 8; array[8] = 6;
+	for(int i = 0; i < 9; i++){
+		a[i] = array[i];
 	}
-	printf("\n%d",count);
+	printf("\n%d", count);
 	backprop();
 	count++;
-	array[0]=2; array[2]=0;
-	for (int i=0; i<9; i++) {
-		a[i]=array[i];
+	array[0] = 2; array[2] = 0;
+	for(int i = 0; i < 9; i++){
+		a[i] = array[i];
 	}
-	printf("\n%d",count);
+	printf("\n%d", count);
 	backprop();
 	count++;
-	array[6]=6; array[8]=8;
-	for (int i=0; i<9; i++) {
-		a[i]=array[i];
+	array[6] = 6; array[8] = 8;
+	for(int i = 0; i < 9; i++){
+		a[i] = array[i];
 	}
-	printf("\n%d",count);
+	printf("\n%d", count);
 	backprop();
 	count++;
-	printf("\n%d",count);
+	printf("\n%d", count);
 	backprop();
 	count++;
-	array[0]=0; array[2]=8; array[8]=2;
-	for (int i=0; i<9; i++) {
-		a[i]=array[i];
+	array[0] = 0; array[2] = 8; array[8] = 2;
+	for(int i = 0; i < 9; i++){
+		a[i] = array[i];
 	}
-	printf("\n%d",count);
+	printf("\n%d", count);
 	backprop();
 	count++;
-	array[6]=0; array[0]=6;
-	for (int i=0; i<9; i++) {
-		a[i]=array[i];
+	array[6] = 0; array[0] = 6;
+	for(int i = 0; i < 9; i++){
+		a[i] = array[i];
 	}
-	printf("\n%d",count);
+	printf("\n%d", count);
 	backprop();
 	count++;
-	array[2]=2; array[8]=8;
-	for (int i=0; i<9; i++) {
-		a[i]=array[i];
+	array[2] = 2; array[8] = 8;
+	for(int i = 0; i < 9; i++){
+		a[i] = array[i];
 	}
-	printf("\n%d",count);
+	printf("\n%d", count);
 	backprop();
 	count++;
 	printf("Training completed.");
 	displaywb();
 }
 void notloose(){
-	if(gamerules(8)==1){
+	if(gamerules(8) == 1){
 		//not loose
 	}
 }
 void play(int cm){
-	int index=-1;;
+	int index = -1;;
 	createb1(cm);
 	displayb();
-	float MAX=0;
-	for(int i=0; i<output; i++){
-		if(a1[i][cm]!=0){
+	float MAX = 0;
+	for(int i = 0; i < output; i++){
+		if(a1[i][cm] != 0){
 			continue;
 		}
-		if(b1[i][cm]>MAX){
-			MAX=b1[i][cm];
-			index=i;
+		if(b1[i][cm] > MAX){
+			MAX = b1[i][cm];
+			index = i;
 		}
 	}
 	//return index;
-	printf("My move is: %d\n",index);
-	a[index]=cm;
+	printf("My move is: %d\n", index);
+	a[index] = cm;
 	createa1(cm);
 	displaya1();
 }
 void result(){
-	printf("\nResult of the match is: %f",gamerules(7));
+	printf("\nResult of the match is: %f", gamerules(7));
 }
 int main(){
 	int x, y;
@@ -444,35 +444,35 @@ int main(){
 		displaya1();
 		printf("Enter your 1st move: ");
 		//scanf("%d %d",&x,&y);
-		scanf("%d",&x);
-		a[x]=0;
+		scanf("%d", &x);
+		a[x] = 0;
 		createa1(0);
 		displaya1();
-		if(x==9 /*&& y==3*/){
+		if(x == 9 /*&& y==3*/){
 			break;
 		}
-		board[x][y]=0;
+		board[x][y] = 0;
 		play(1);
 		printf("Enter your 2nd move: ");
 		//scanf("%d %d",&x,&y);
-		scanf("%d",&x);
-		a[x]=2;
+		scanf("%d", &x);
+		a[x] = 2;
 		createa1(2);
-		board[x][y]=2;
+		board[x][y] = 2;
 		play(3);
 		printf("Enter your 3rd move: ");
 		//scanf("%d %d",&x,&y);
-		scanf("%d",&x);
-		a[x]=4;
+		scanf("%d", &x);
+		a[x] = 4;
 		createa1(4);
-		board[x][y]=4;
+		board[x][y] = 4;
 		play(5);
 		printf("Enter your 4th move: ");
 		//scanf("%d %d",&x,&y);
-		scanf("%d",&x);
-		a[x]=6;
+		scanf("%d", &x);
+		a[x] = 6;
 		createa1(6);
-		board[x][y]=6;
+		board[x][y] = 6;
 		play(7);
 		/*printf("Enter your 5th move: ");
 		scanf("%f %f",&x,&y);

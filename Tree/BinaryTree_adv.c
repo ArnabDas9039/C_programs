@@ -1,13 +1,11 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include<stdio.h>
+#include<stdlib.h>
 void display(){
-    
+
 }
-int main()
-{
+int main(){
     int choice;
-    while (1)
-    {
+    while(1){
         printf("\n\nBINARY TREE MENU\n");
         printf("\n Enter 0 to display ");
         printf("\n Enter 1 to insert ");
@@ -17,8 +15,7 @@ int main()
         printf("\n Enter 10 to exit\n ");
         printf("\nEnter choice: ");
         scanf("%d", &choice);
-        switch (choice)
-        {
+        switch(choice){
         case 0:
             display();
             break;
