@@ -1,7 +1,12 @@
 #include<stdio.h>
 #include<string.h>
-#include<stdlib.h>
+// #include<stdlib.h>
 int main(){
+    // int a = sizeof(char);
+    int b = 2;
+    int d = 1;
+    // int c;
+    int c = d / b;
     //char *c = "white";
     //char c = 'a';
     //printf("Player 1: ");
@@ -9,10 +14,11 @@ int main(){
     // printf("Player 2: ");
     // scanf("%s",d);
     // printf("%d",sizeof(c));
-    // for(int i=0; i<sizeof(c); i++){
-    //     // printf("%c",c[i]);
-    //     printf("%c",c);
+    // for(int i=0; i<strlen(c); i++){
+    //     printf("%c",c[i]);
+    //     // printf("%c",c);
     // }
+    return 0;
     // char *c = "India";
     // int n = strlen(c);
     // *c = c[n];

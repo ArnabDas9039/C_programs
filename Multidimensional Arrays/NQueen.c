@@ -14,12 +14,50 @@ bool isSafe(int r, int c){
 }
 void display(){
 	int i, j;
-	for(i = 0; i < MAX; i++){
-		for(j = 0; j < MAX; j++){
+	for(i = 0; i < n; i++){
+		for(j = 0; j < n; j++){
 			printf(" %d ", a[i][j]);
 		}
 		printf("\n");
 	}
+}
+int rec_nqueen(int r, int c){
+	if(r >= n){
+		return 1;
+	}
+	if(c >= n){
+		return 0;
+	}
+	if(isSafe(r,c)){
+		a[r][c] = 1;
+		if(rec_nqueen(r+1,0)){
+			return 1;
+		}
+		a[r][c] = 0;
+	}
+	return rec_nqueen(r, c+1);
+}
+int rec_nqueen2(int r){
+	if(r >= n){
+		return 1;
+	}
+	for(int i = 0; i < n; i++){
+		if(isSafe(r,i)){
+			a[r][i] = 1;
+			if(rec_nqueen2(r+1)){
+				return 1;
+			}
+			a[r][i] = 0;
+		}
+	}
+	return 0;
+}
+void solve2(){
+	if(!rec_nqueen(0,0)){
+		printf("Solution doesn't exist.");
+		return;
+	}
+	display();
 }
 int reset(int r){
 	for(int i = 0; i < n; i++){
@@ -49,6 +87,7 @@ void solve(int r, int c, int k){
 int main(){
 	printf("Enter the number of Queens: ");
 	scanf("%d", &n);
-	solve(0, 0, 0);
+	solve2();
+	//solve(0, 0, 0);
 	return 0;
 }

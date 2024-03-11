@@ -1,5 +1,8 @@
 	.file	"base.c"
 	.def	___main;	.scl	2;	.type	32;	.endef
+	.section .rdata,"dr"
+LC0:
+	.ascii "012345678\0"
 	.text
 	.globl	_main
 	.def	_main;	.scl	2;	.type	32;	.endef
@@ -12,19 +15,11 @@ LFB10:
 	movl	%esp, %ebp
 	.cfi_def_cfa_register 5
 	andl	$-16, %esp
-	subl	$32, %esp
+	subl	$16, %esp
 	call	___main
-	movb	$97, 27(%esp)
-	movl	$0, 28(%esp)
-	jmp	L2
-L3:
-	movsbl	27(%esp), %eax
-	movl	%eax, (%esp)
-	call	_putchar
-	addl	$1, 28(%esp)
-L2:
-	cmpl	$0, 28(%esp)
-	je	L3
+	movl	$LC0, 12(%esp)
+	movl	$2, 8(%esp)
+	movl	$1, 4(%esp)
 	movl	$0, %eax
 	leave
 	.cfi_restore 5
@@ -33,4 +28,3 @@ L2:
 	.cfi_endproc
 LFE10:
 	.ident	"GCC: (MinGW.org GCC-6.3.0-1) 6.3.0"
-	.def	_putchar;	.scl	2;	.type	32;	.endef

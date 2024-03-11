@@ -1,57 +1,32 @@
 #include<stdio.h>
+#include<math.h>
 #include<stdlib.h>
-#define MAX 10
-int a[MAX];
-int sizecalc(){
-	int n = 0;
-	for(int i = 0; a[i] != NULL; i++){
-		n++;
-	}
-	return n;
-}
-void display(){
+void display(int* a, int n){
 	printf("\nThe array is: ");
-	for(int i = 0;i < sizecalc();i++){
+	for(int i = 0;i < n;i++){
 		printf(" %d", a[i]);
 	}
 	printf("\n");
 }
-void selectionsort(int i){
-	int k;
-	for(int j = i + 2; j < sizecalc(); j = j + 2){
-		if(a[j] < a[i]){
-			k = a[i];
-			a[i] = a[j];
-			a[j] = k;
-		}
-	}
-}
-void function(){
-	int k, j;
-	for(int i = 0; i < sizecalc(); i++){
-		if(i % 2 == 0){
-			selectionsort(i);
-		}
-		else{
-			selectionsort(i);
-		}
-	}
-	display();
+void function(int* a, int n){
+	//Write function here
+	display(a, n);
 }
 int main(){
 	int i, choice;
-	a[2] = 32; a[1] = 21; a[3] = 43; a[4] = 10; a[0] = 54; a[5] = 76; a[6] = 98; a[7] = 65; a[8] = 87;
+	int a[] = {2,9,5,4,7,1,8,6,0,3};
+	int n = sizeof(a) / sizeof(a[0]);
 	while(1){
 		printf("\n\nARRAY MENU\n");
 		printf("\n Enter 0 to display ");
 		printf("\n Enter 1 to perform function ");
-		printf("\n Enter 2 to exit\n ");
+		printf("\n Enter 10 to exit\n ");
 		printf("\nEnter choice: ");
 		scanf("%d", &choice);
 		switch(choice){
-		case 0:	display();break;
-		case 1: function();break;
-		case 2: exit(0);
+		case 0:	display(a, n);break;
+		case 1: function(a, n);break;
+		case 10: exit(0);
 		default: printf("\nPlease enter a valid choice");
 		}
 	}

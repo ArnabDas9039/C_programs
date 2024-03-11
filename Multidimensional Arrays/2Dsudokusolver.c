@@ -1,32 +1,31 @@
 #include<stdio.h>
 #include<stdbool.h>
-#define MAX 4
+#define MAX 9
 int a[MAX][MAX] = {
-	{1,0,0,0},
-	{0,2,0,0},
-	{0,0,2,0},
-	{0,0,0,1}
+	{3,0,0,8,0,1,0,0,2},
+	{2,0,1,0,3,0,6,0,4},
+	{0,0,0,2,0,4,0,0,0},
+	{8,0,9,0,0,0,1,0,6},
+	{0,6,0,0,0,0,0,5,0},
+	{7,0,2,0,0,0,4,0,9},
+	{0,0,0,5,0,9,0,0,0},
+	{9,0,4,0,8,0,7,0,5},
+	{6,0,0,1,0,7,0,0,3},
 };
-/*int a[MAX][MAX]={
-	{1,0,0,0,0,0,0,0,0},
-	{0,1,0,0,0,0,0,0,0},
-	{0,0,1,0,0,0,0,0,0},
-	{0,0,0,1,0,0,0,0,0},
-	{0,0,0,0,0,1,0,0,0},
-	{0,0,0,0,1,0,0,0,0},
-	{0,0,0,0,0,0,0,0,1},
-	{0,0,0,0,0,0,0,1,0},
-	{0,0,0,0,0,0,1,0,0},
-};*/
-int b[MAX][MAX] = a[MAX][MAX];
 bool isSafe(int r, int c, int z){
-	int i;
-	for(i = 0; i < MAX; i++){
+	for(int i = 0; i < MAX; i++){
 		if(a[i][c] == z){
 			return false;
 		}
 		else if(a[r][i] == z){
 			return false;
+		}
+	}
+	for(int i = 0; i < 3; i++){
+		for(int j = 0; j < 3; j++){
+			if(a[i + r - r % 3][j + c - c % 3] == z){
+				return false;
+			}
 		}
 	}
 	return true;
@@ -41,57 +40,31 @@ void display(){
 		printf("\n");
 	}
 }
-void solve(int r, int c, int z);
-int reset(int r, int c){
-	if(c == 0){
-		r = r - 1;
-		c = MAX - 1;
-	}
-	for(int i = c; i >= 0; i--){
-		if(b[r][i] == 0){
-			int k = a[r][i];
-			solve(r, i, k + 1);
-		}
-	}
-}
-void nextbox(int r, int c){
-	printf("\nNext box function.");
-	if(c < MAX - 1){
-		printf("\nnext column");
-		solve(r, c + 1, 1);
-	}
-	else{
-		printf("\nnext row");
-		solve(r + 1, 0, 1);
-	}
-}
-void solve(int r, int c, int z){
-	if(c >= MAX || r >= MAX){
-		printf("\nCondition satisfied for print.");
+int sudoku(int r, int c){
+	if(r == MAX){
 		display();
+		return 1;
 	}
-	else if(a[r][c] == 0 && z <= MAX && z > 0){
-		printf("\nCondition satisfied for empty space.");
-		if(isSafe(r, c, z) == true){
-			printf("\nCondition satisfied for safe. Safe number is %d.", z);
-			a[r][c] = z;
-			nextbox(r, c);
+	if(c == MAX){
+		return sudoku(r + 1, 0);
+	}
+	if(a[r][c] != 0){
+		return sudoku(r, c + 1);
+	}
+	for(int i = 1; i <= MAX; i++){
+		if(isSafe(r, c, i)){
+			a[r][c] = i;
+			if(sudoku(r, c + 1)){
+				return 1;
+			}
+			a[r][c] = 0;
 		}
-		else if(isSafe(r, c, z) == false){
-			printf("\nCondition satisfied for not safe. Moving to next number. Not safe number is %d", z);
-			solve(r, c, z + 1);
-		}
 	}
-	else if(z >= MAX){
-		printf("\nCondition satisfied for none of the numbers are possible.");
-		//reset(r, c);
-	}
-	else{
-		nextbox(r, c);
-	}
+	return 0;
 }
 int main(){
 	printf("\n\nSUDOKU");
-	solve(0, 0, 1);
+	display();
+	sudoku(0, 0);
 	return 0;
 }
