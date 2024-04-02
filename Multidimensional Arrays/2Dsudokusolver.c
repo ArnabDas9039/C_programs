@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdbool.h>
 #define MAX 9
-int a[MAX][MAX] = {
+int a[MAX][MAX]/* = {
 	{3,0,0,8,0,1,0,0,2},
 	{2,0,1,0,3,0,6,0,4},
 	{0,0,0,2,0,4,0,0,0},
@@ -11,7 +11,7 @@ int a[MAX][MAX] = {
 	{0,0,0,5,0,9,0,0,0},
 	{9,0,4,0,8,0,7,0,5},
 	{6,0,0,1,0,7,0,0,3},
-};
+}*/;
 bool isSafe(int r, int c, int z){
 	for(int i = 0; i < MAX; i++){
 		if(a[i][c] == z){
@@ -63,8 +63,13 @@ int sudoku(int r, int c){
 	return 0;
 }
 int main(){
-	printf("\n\nSUDOKU");
-	display();
+	printf("\n\nSUDOKU\n");
+	//display();
+	for(int i = 0; i < MAX; i++){
+		for(int j = 0; j < MAX; j++){
+			scanf("%d",&a[i][j]);
+		}
+	}
 	sudoku(0, 0);
 	return 0;
 }

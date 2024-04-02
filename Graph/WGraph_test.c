@@ -5,6 +5,7 @@
 typedef struct edge{
 	int src;
 	int dest;
+    int weight;
 	struct edge* link;
 }edge;
 edge* graph[7];
@@ -13,14 +14,39 @@ int n = 7;
 int rear = -1, drear = -1;
 bool visit[] = { false, false, false, false, false, false, false };
 unsigned int dist[] = {UINT_MAX, UINT_MAX, UINT_MAX, UINT_MAX, UINT_MAX, UINT_MAX, UINT_MAX};
+void swap(edge** a, edge** b){
+	edge* t = *a;
+	*a = *b;
+	*b = t;
+}
+int partition(edge** a, int low, int high){
+	int p = dist[a[high]->dest];
+	int j = low - 1;
+	for(int i = low; i < high; i++){
+		if(dist[a[i]->dest] < p){
+			j++;
+			swap(&a[i], &a[j]);
+		}
+	}
+	swap(&a[++j], &a[high]);
+	return j;
+}
+void quicksort(edge** q, int low, int high){
+	if(low < high){
+		int pidx = partition(q, low, high);
+		quicksort(q, low, pidx - 1);
+		quicksort(q, pidx + 1, high);
+	}
+}
 void enqueue(edge** q, edge* s){
-	q[++rear] = s;
+    q[++rear] = s;
 	// if(q[rear]==NULL){
 	// 	printf("\nenqueue(-1)");
 	// }
 	// else{
 	// 	printf("\nenqueue(%d)",q[rear]->dest);
 	// }
+    quicksort(q, 0, rear);
 	return;
 }
 edge* dequeue(edge** q){
@@ -55,15 +81,50 @@ void qdisplay(){
 		}
 	}
 }
-void append(int src, int dest){
+void appendweight(int src, int dest, int weight){
 	edge* p = malloc(sizeof(edge));
 	p->src = src;
 	p->dest = dest;
+    p->weight = weight;
 	p->link = NULL;
 	if(graph[src] == NULL){
 		edge* vertex = malloc(sizeof(edge));
 		vertex->src = src;
 		vertex->dest = src;
+        vertex->weight = 0;
+		vertex->link = p;
+		graph[src] = vertex;
+	}
+	else if(p->weight < graph[src]->link->weight){
+		p->link = graph[src]->link;
+		graph[src]->link = p;
+	}
+	else{
+		for(edge* list = graph[src]->link; list != NULL; list = list->link){
+			if(list->link == NULL){
+				list->link = p;
+				break;
+			}
+			else if(p->weight < list->link->weight){
+				p->link = list->link;
+				list->link = p;
+				break;
+			}
+		}
+	}
+	return;
+}
+void append(int src, int dest, int weight){
+	edge* p = malloc(sizeof(edge));
+	p->src = src;
+	p->dest = dest;
+    p->weight = weight;
+	p->link = NULL;
+	if(graph[src] == NULL){
+		edge* vertex = malloc(sizeof(edge));
+		vertex->src = src;
+		vertex->dest = src;
+        vertex->weight = 0;
 		vertex->link = p;
 		graph[src] = vertex;
 	}
@@ -86,8 +147,8 @@ void append(int src, int dest){
 	}
 	return;
 }
-void addedge(int u, int v){
-	append(u, v);
+void addedge(int u, int v, int w){
+	append(u, v, w);
 	return;
 }
 void display(){
@@ -95,7 +156,7 @@ void display(){
 	for(int i = 0; i < n; i++){
 		value = graph[i];
 		while(value != NULL){
-			printf("%d => ", value->dest);
+			printf("%d(%d) => ", value->dest, value->weight);
 			value = value->link;
 		}
 		printf("END\n");
@@ -150,15 +211,20 @@ bool cycle_detect(edge *vertex, int parent){
 }
 void shortest_path(edge *vertex){
 	enqueue(q, graph[vertex->dest]);
+    // qdisplay();
+    dist[vertex->dest] = 0;
 	while(!isempty()){
 		edge* value = dequeue(q);
+        // qdisplay();
 		if(visit[value->dest] == false){
 			visit[value->dest] = true;
 			value = graph[value->dest];
 			while(value != NULL){
-				if(dist[value->src] + 1 < dist[value->dest]){
-					dist[value->dest] = dist[value->src] + 1; 
+				if(dist[value->src] + value->weight < dist[value->dest]){
+					dist[value->dest] = dist[value->src] + value->weight;
+                    // printf("\nDistance %d updated for %d",dist[value->dest],value->dest);
 					enqueue(q, value);
+                    // qdisplay();
 				}
 				value = value->link;
 			}
@@ -172,34 +238,36 @@ void shortest_path(edge *vertex){
 int main(){
 	//edge *graph[n];
 	//0
-	addedge(0, 1);
+	addedge(0, 1, 2);
 	//printf("0 => %d => %d\n",graph[0]->dest, graph[0]->link->dest);
-	addedge(0, 2);
+	addedge(0, 2, 4);
 	//printf("0 => %d",graph[0]->dest);
 	//1
-	addedge(1, 0);
-	addedge(1, 3);
+	addedge(1, 0, 2);
+	addedge(1, 3, 7);
+    addedge(1, 2, 1);
 	//2
-	addedge(2, 0);
-	addedge(2, 4);
+	addedge(2, 0, 4);
+    addedge(2, 1, 1);
+	addedge(2, 4, 3);
 	//3
-	addedge(3, 1);
-	addedge(3, 4);
-	addedge(3, 5);
+	addedge(3, 1, 7);
+	addedge(3, 4, 2);
+	addedge(3, 5, 1);
 	//4
-	addedge(4, 2);
-	addedge(4, 3);
-	addedge(4, 5);
+	addedge(4, 2, 3);
+	addedge(4, 3, 2);
+	addedge(4, 5, 5);
 	//5
-	addedge(5, 3);
-	addedge(5, 4);
-	addedge(5, 6);
+	addedge(5, 3, 1);
+	addedge(5, 4, 5);
+	addedge(5, 6, 1);
 	//6
-	addedge(6, 5);
+	addedge(6, 5, 1);
 	display();
 	// dfs(graph[0]);
 	// bfs(graph[0]);
-	//printf("\n%d",cycle_detect(graph[0],-1));
+	// printf("\n%d",cycle_detect(graph[0],-1));
 	shortest_path(graph[0]);
 	return 0;
 }

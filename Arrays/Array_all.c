@@ -238,6 +238,7 @@ int main(){
 		case 2:
 			printf("Enter value to search: ");
 			scanf("%d", &k);
+			quicksort(a, 0, n-1);
 			int idx = binarysearch(a, 0, n - 1, k);
 			if(idx != -1){
 				printf("Found at Index: %d\n", idx);
@@ -245,6 +246,7 @@ int main(){
 			else{
 				printf("NOT found\n");
 			}
+			unsort(a, b, n);
 			break;
 		case 3:
 			reverse(a, n);
