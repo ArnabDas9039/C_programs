@@ -14,6 +14,7 @@ int n = 7;
 int rear = -1, drear = -1;
 bool visit[] = { false, false, false, false, false, false, false };
 unsigned int dist[] = {UINT_MAX, UINT_MAX, UINT_MAX, UINT_MAX, UINT_MAX, UINT_MAX, UINT_MAX};
+int dist2[] = {INT_MAX, INT_MAX, INT_MAX, INT_MAX, INT_MAX, INT_MAX, INT_MAX};
 void swap(edge** a, edge** b){
 	edge* t = *a;
 	*a = *b;
@@ -235,39 +236,65 @@ void shortest_path(edge *vertex){
 	}
 	return;
 }
+void bellmanford(edge* vertex){
+	dist2[vertex->dest] = 0;
+	for(int j = 0; j < 5; j++){
+		for(int i = 0; i < 6; i++){
+			edge *value = graph[i];
+			while(value != NULL){
+				if(dist2[value->src] != INT_MAX && dist2[value->src] + value->weight < dist2[value->dest]){
+					dist2[value->dest] = dist2[value->src] + value->weight;
+				}
+				value = value->link;
+			}
+		}
+	}
+	for(int i = 0; i < 7; i++){
+		printf("%d ", dist2[i]);
+	}
+	return;
+}
 int main(){
-	//edge *graph[n];
-	//0
-	addedge(0, 1, 2);
-	//printf("0 => %d => %d\n",graph[0]->dest, graph[0]->link->dest);
-	addedge(0, 2, 4);
-	//printf("0 => %d",graph[0]->dest);
-	//1
-	addedge(1, 0, 2);
-	addedge(1, 3, 7);
-    addedge(1, 2, 1);
-	//2
-	addedge(2, 0, 4);
-    addedge(2, 1, 1);
-	addedge(2, 4, 3);
-	//3
-	addedge(3, 1, 7);
-	addedge(3, 4, 2);
-	addedge(3, 5, 1);
-	//4
-	addedge(4, 2, 3);
-	addedge(4, 3, 2);
-	addedge(4, 5, 5);
-	//5
-	addedge(5, 3, 1);
-	addedge(5, 4, 5);
-	addedge(5, 6, 1);
-	//6
-	addedge(6, 5, 1);
+	// //0
+	// addedge(0, 1, 2);
+	// addedge(0, 2, 4);
+	// //1
+	// addedge(1, 0, 2);
+	// addedge(1, 3, 7);
+    // addedge(1, 2, 1);
+	// //2
+	// addedge(2, 0, 4);
+    // addedge(2, 1, 1);
+	// addedge(2, 4, 3);
+	// //3
+	// addedge(3, 1, 7);
+	// addedge(3, 4, 2);
+	// addedge(3, 5, 1);
+	// //4
+	// addedge(4, 2, 3);
+	// addedge(4, 3, 2);
+	// addedge(4, 5, 5);
+	// //5
+	// addedge(5, 3, 1);
+	// addedge(5, 4, 5);
+	// addedge(5, 6, 1);
+	// //6
+	// addedge(6, 5, 1);
+	// display();
+
+	addedge(0,1,10);addedge(0,5,8);
+	addedge(1,3,2);
+	addedge(2,1,1);
+	addedge(3,2,-2);
+	addedge(4,1,-4);addedge(4,3,-1);
+	addedge(5,4,1);
 	display();
+
 	// dfs(graph[0]);
 	// bfs(graph[0]);
 	// printf("\n%d",cycle_detect(graph[0],-1));
-	shortest_path(graph[0]);
+	// shortest_path(graph[0]);
+	bellmanford(graph[0]);
 	return 0;
 }
+

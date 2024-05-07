@@ -9,12 +9,13 @@ typedef struct edge{
 }edge;
 edge* graph[7];
 edge* q[14];
+edge* s[14];
 int n = 7;
-int rear = -1, drear = -1;
+int rear = -1, top = -1;
 bool visit[] = { false, false, false, false, false, false, false };
-unsigned int dist[] = {UINT_MAX, UINT_MAX, UINT_MAX, UINT_MAX, UINT_MAX, UINT_MAX, UINT_MAX};
-void enqueue(edge** q, edge* s){
-	q[++rear] = s;
+unsigned int dist[] = { UINT_MAX, UINT_MAX, UINT_MAX, UINT_MAX, UINT_MAX, UINT_MAX, UINT_MAX };
+void enqueue(edge** q, edge* node){
+	q[++rear] = node;
 	// if(q[rear]==NULL){
 	// 	printf("\nenqueue(-1)");
 	// }
@@ -38,8 +39,36 @@ edge* dequeue(edge** q){
 	// }
 	return ptr;
 }
-bool isempty(){
+bool isqempty(){
 	if(rear == -1){
+		return true;
+	}
+	return false;
+}
+void push(edge** s, edge* node){
+	s[++top] = node;
+	// if(s[top]==NULL){
+	// 	printf("\npush(-1)");
+	// }
+	// else{
+	// 	printf("\npush(%d)",s[top]->dest);
+	// }
+	return;
+}
+edge* pop(edge** s){
+	edge* ptr = s[top];
+	// if(ptr==NULL){
+	// 	printf("\npop(-1)");
+	// }
+	// else{
+	// 	printf("\npop(%d)",ptr->dest);
+	// }
+	s[top] = NULL;
+	top--;
+	return ptr;
+}
+bool issempty(){
+	if(top == -1){
 		return true;
 	}
 	return false;
@@ -52,6 +81,17 @@ void qdisplay(){
 		}
 		else{
 			printf("%d ", q[i]->dest);
+		}
+	}
+}
+void sdisplay(){
+	printf("\nS: ");
+	for(int i = 0; i <= top; i++){
+		if(s[i] == NULL){
+			printf("-1 ");
+		}
+		else{
+			printf("%d ", s[i]->dest);
 		}
 	}
 }
@@ -101,7 +141,7 @@ void display(){
 		printf("END\n");
 	}
 }
-void dfs(edge* vertex){
+void dfs_rec(edge* vertex){
 	if(visit[vertex->dest] == true){
 		return;
 	}
@@ -109,13 +149,28 @@ void dfs(edge* vertex){
 	visit[vertex->dest] = true;
 	edge* value = graph[vertex->dest];
 	while(value != NULL){
-		dfs(value);
+		dfs_rec(value);
 		value = value->link;
 	}
 }
-void bfs(edge *vertex){
+void dfs(edge* vertex){
+	push(s, graph[vertex->dest]);
+	while(!issempty()){
+		edge* value = pop(s);
+		if(visit[value->dest] == false){
+			printf("%d ", value->dest);
+			visit[value->dest] = true;
+			value = graph[value->dest];
+			while(value != NULL){
+				push(s, value);
+				value = value->link;
+			}
+		}
+	}
+}
+void bfs(edge* vertex){
 	enqueue(q, graph[vertex->dest]);
-	while(!isempty()){
+	while(!isqempty()){
 		edge* value = dequeue(q);
 		if(visit[value->dest] == false){
 			printf("%d ", value->dest);
@@ -129,10 +184,10 @@ void bfs(edge *vertex){
 	}
 	return;
 }
-bool cycle_detect(edge *vertex, int parent){
-	printf("\nIndex is: %d, Parent is %d",vertex->dest, parent);
+bool cycle_detect(edge* vertex, int parent){
+	printf("\nIndex is: %d, Parent is %d", vertex->dest, parent);
 	if(visit[vertex->dest] == true){
-		printf("\n%d is visited. Trying to reach %d from %d but parent is %d",vertex->dest,vertex->dest,vertex->src,parent);
+		printf("\n%d is visited. Trying to reach %d from %d but parent is %d", vertex->dest, vertex->dest, vertex->src, parent);
 		if(parent != vertex->dest){
 			return true;
 		}
@@ -148,16 +203,17 @@ bool cycle_detect(edge *vertex, int parent){
 	}
 	return false;
 }
-void shortest_path(edge *vertex){
+void short_path(edge* vertex){
 	enqueue(q, graph[vertex->dest]);
-	while(!isempty()){
+	dist[vertex->dest] = 0;
+	while(!isqempty()){
 		edge* value = dequeue(q);
 		if(visit[value->dest] == false){
 			visit[value->dest] = true;
 			value = graph[value->dest];
 			while(value != NULL){
 				if(dist[value->src] + 1 < dist[value->dest]){
-					dist[value->dest] = dist[value->src] + 1; 
+					dist[value->dest] = dist[value->src] + 1;
 					enqueue(q, value);
 				}
 				value = value->link;
@@ -165,7 +221,23 @@ void shortest_path(edge *vertex){
 		}
 	}
 	for(int i = 0; i < 7; i++){
-		printf("%d ",dist[i]);
+		printf("%d ", dist[i]);
+	}
+	return;
+}
+void bellmanford(edge* vertex){
+	dist[vertex->dest] = 0;
+	for(int i = 0; i < 7; i++){
+		edge *value = graph[i];
+		while(value != NULL){
+			if(dist[value->src] != UINT_MAX && dist[value->src] + 1 < dist[value->dest]){
+				dist[value->dest] = dist[value->src] + 1;
+			}
+			value = value->link;
+		}
+	}
+	for(int i = 0; i < 7; i++){
+		printf("%d ", dist[i]);
 	}
 	return;
 }
@@ -199,7 +271,9 @@ int main(){
 	display();
 	// dfs(graph[0]);
 	// bfs(graph[0]);
-	//printf("\n%d",cycle_detect(graph[0],-1));
-	shortest_path(graph[0]);
+	// dfs_rec(graph[0]);
+	// printf("\n%d",cycle_detect(graph[0],-1));
+	// short_path(graph[0]);
+	bellmanford(graph[1]);
 	return 0;
 }

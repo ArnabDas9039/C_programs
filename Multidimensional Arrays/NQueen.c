@@ -22,6 +22,8 @@ void display(){
 	}
 }
 int rec_nqueen(int r, int c){
+	display();
+	printf("\n");
 	if(r >= n){
 		return 1;
 	}

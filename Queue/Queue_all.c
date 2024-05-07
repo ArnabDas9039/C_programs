@@ -1,38 +1,56 @@
 #include<stdio.h>
 #include<stdlib.h>
 #define MAX 5
-int a[MAX];
-int front = -1;
-int rear = -1;
+int a[MAX + 1];
+int rear = -1, front = -1;
 void enqueue(){
 	int n;
-	if(rear == MAX - 1){
+	if((rear + 2) % (MAX + 1) == front){
 		printf("Queue overflow.");
 	}
 	else{
-		printf("Enter data: ");
-		scanf("%d", &n);
-		a[++rear] = n;
 		if(front == -1){
 			front++;
 		}
+		printf("Enter data: ");
+		scanf("%d", &n);
+		rear++;
+		if(rear > MAX){
+			rear %= (MAX + 1);
+		}
+		a[rear] = n;
 	}
 }
 void dequeue(){
-	if(rear == -1){
+	if((rear + 1) % (MAX + 1) == front){
 		printf("Queue underflow.");
 	}
 	else{
 		printf("%d is removed.", a[front]);
-		for(int i = 0;i <= rear;i++){
-			a[i] = a[i + 1];
+		// for(int i = 0;i <= rear;i++){
+		// 	a[i] = a[i + 1];
+		// }
+		// rear--;
+		front++;
+		if(front > MAX){
+			front %= (MAX + 1);
 		}
-		rear--;
 	}
 }
 void display(){
-	for(int i = front;i <= rear;i++){
+	if((rear + 1) % (MAX + 1) == front){
+		return;
+	}
+	int i = front;
+	while(1){
+		if(i > MAX){
+			i %= (MAX + 1);
+		}
 		printf("%d ", a[i]);
+		if(i == rear){
+			break;
+		}
+		i++;
 	}
 }
 int main(){

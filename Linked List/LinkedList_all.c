@@ -144,7 +144,7 @@ void delend(){
 		}
 	}
 }
-void deleteany(){
+void deleteanypos(){
 	int k, i = 1;
 	node* value, * s;
 	if(head == NULL){
@@ -203,7 +203,7 @@ void convertlist(){
 		s = s->link;
 	}
 	s->link = head;
-	printf("The list is converted to circular. Do not press 0.");
+	printf("The list is converted to circular. Do not attempt to perform any other function.");
 }
 int main(){
 	int choice;
@@ -242,12 +242,12 @@ int main(){
 			delend();
 			break;
 		case 6:
-			deleteany();
-			break;
-		case 7:
-			reverselist();
+			deleteanypos();
 			break;
 		case 8:
+			reverselist();
+			break;
+		case 9:
 			convertlist();
 			break;
 		case 10:

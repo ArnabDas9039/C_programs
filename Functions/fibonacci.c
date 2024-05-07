@@ -3,7 +3,7 @@
 long unsigned int fibo(int n){
     int a = 0, b = 1, c = 1, count = 0;
     while(--n){
-        //printf("%d ",c);
+        // printf("%d ",c);
         c = a + b;
         a = b;
         b = c;

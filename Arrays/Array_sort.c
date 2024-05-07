@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include<stdlib.h>
 void swap(int* a, int* b){
 	int t = *a;
 	*a = *b;
@@ -11,16 +12,22 @@ void display(int* a, int n){
 	}
 	printf("\n");
 }
-void sortArr(int* a){
+void sortArr(int* a, int n){
 	// Write test function here
-
-}
-void function(int* a, int n){
-	sortArr(a);
-	display(a, n);
-	quicksort(a, 0, n-1);
-	printf("\nOriginal Answer:");
-	display(a, n);
+	int k, swapped = 1;
+	for(int i = 0; i < n && swapped; i++){
+		swapped = 0;
+		for(int j = 0; j < n - i - 1; j++){
+			if(a[j] > a[j + 1]){
+				k = a[j + 1];
+				a[j + 1] = a[j];
+				a[j] = k;
+				swapped = 1;
+			}
+			display(a, n);
+		}
+	}
+	printf("Array Sorted\n");
 }
 int partition(int* a, int low, int high){
 	int p = a[high];
@@ -41,6 +48,13 @@ void quicksort(int* a, int low, int high){
 		quicksort(a, pidx + 1, high);
 	}
 }
+void function(int* a, int n){
+	sortArr(a, n);
+	display(a, n);
+	quicksort(a, 0, n-1);
+	printf("\nOriginal Answer:");
+	display(a, n);
+}
 void unsort(int* a, int n, int* b){
 	for(int i = 0; i < n; i++){
 		a[i] = b[i];
@@ -49,7 +63,8 @@ void unsort(int* a, int n, int* b){
 }
 int main(){
 	int i, choice;
-	int a[] = { 2,9,5,4,7,1,8,6,0,3 };
+	// int a[] = { 2,9,5,4,7,1,8,6,0,3 };
+	int a[] = { 2,1,0,3 };
 	int n = sizeof(a) / sizeof(a[0]);
 	int b[n];
 	for(int i = 0; i < n; i++){

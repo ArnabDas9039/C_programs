@@ -14,7 +14,8 @@ void floatToBinaryArray(float number, uint32_t* binaryArray){
 
 int main(){
     //float number=1.175494210692441075487029444849287348827052428745893333857174530571588870475618904265502351336181163787841796875E-38;
-    float number = 1.17549421069e-38;
+    // float number = 1.17549421069e-38;
+    float number = 0.75;
     uint32_t binaryArray[32];
     floatToBinaryArray(number, binaryArray);
     printf("Binary representation of %.20e:\n", number);
