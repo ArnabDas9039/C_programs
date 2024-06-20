@@ -1,7 +1,7 @@
 #include<stdio.h>
 int count = 0, count2 = 0, count3 = 0;
 void foo(int n){
-    //Time O(sum(1^n))
+    //Time O(sum(1^n)) = O(n)
     printf("foo called %d times\n",++count);
     if(n == 1){
         return;

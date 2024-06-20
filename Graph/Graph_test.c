@@ -272,8 +272,8 @@ int main(){
 	// dfs(graph[0]);
 	// bfs(graph[0]);
 	// dfs_rec(graph[0]);
-	// printf("\n%d",cycle_detect(graph[0],-1));
+	printf("\n%d",cycle_detect(graph[0],-1));
 	// short_path(graph[0]);
-	bellmanford(graph[1]);
+	// bellmanford(graph[1]);
 	return 0;
 }

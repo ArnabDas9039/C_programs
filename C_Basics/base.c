@@ -12,12 +12,18 @@
 // }
 int main(){
     // int a = sizeof(char);
-    int b = 2;
-    int d = 1;
-    char *maze = "In mathematics, a tensor is an algebraic object that describes a multilinear relationship between sets of algebraic objects related to a vector space. Tensors may map between different objects such as vectors, scalars, and even other tensors. There are many types of tensors, including scalars and vectors (which are the simplest tensors), dual vectors, multilinear maps between vector spaces, and even some operations such as the dot product. Tensors are defined independent of any basis, although they are often referred to by their components in a basis related to a particular coordinate system; those components form an array, which can be thought of as a high-dimensional matrix. Tensors have become important in physics because they provide a concise mathematical framework for formulating and solving physics problems in areas such as mechanics (stress, elasticity, quantum mechanics, fluid mechanics, moment of inertia, ...), electrodynamics (electromagnetic tensor, Maxwell tensor, permittivity, magnetic susceptibility, ...), general relativity (stress–energy tensor, curvature tensor, ...), and others. In applications, it is common to study situations in which a different tensor can occur at each point of an object; for example the stress within an object may vary from one location to another. This leads to the concept of a tensor field. In some areas, tensor fields are so ubiquitous that they are often simply called tensors. Tullio Levi-Civita and Gregorio Ricci-Curbastro popularised tensors in 1900 – continuing the earlier work of Bernhard Riemann, Elwin Bruno Christoffel, and others – as part of the absolute differential calculus. The concept enabled an alternative formulation of the intrinsic differential geometry of a manifold in the form of the Riemann curvature tensor.";
-    printf("sizeof maze is %d and %d\n",sizeof(maze),strlen(maze));
-    printf("%c\n",maze[80]);
-    puts(maze);
+    // int b = 2;
+    // int d = 1;
+    char *a = "Arnab";
+    char *b = "Ankit";
+    printf("%d", strcmp(b, a));
+    // char *maze = "In mathematics, a tensor is an algebraic object that describes a multilinear relationship between sets of algebraic objects related to a vector space. Tensors may map between different objects such as vectors, scalars, and even other tensors. There are many types of tensors, including scalars and vectors (which are the simplest tensors), dual vectors, multilinear maps between vector spaces, and even some operations such as the dot product. Tensors are defined independent of any basis, although they are often referred to by their components in a basis related to a particular coordinate system; those components form an array, which can be thought of as a high-dimensional matrix. Tensors have become important in physics because they provide a concise mathematical framework for formulating and solving physics problems in areas such as mechanics stress, elasticity, quantum mechanics, fluid mechanics, moment of inertia, electrodynamics electromagnetic tensor, Maxwell tensor, permittivity, magnetic susceptibility, general relativity stress energy tensor, curvature tensor, and others. In applications, it is common to study situations in which a different tensor can occur at each point of an object; for example the stress within an object may vary from one location to another. This leads to the concept of a tensor field. In some areas, tensor fields are so ubiquitous that they are often simply called tensors. Tullio Levi-Civita and Gregorio Ricci-Curbastro popularised tensors in 1900 continuing the earlier work of Bernhard Riemann, Elwin Bruno Christoffel, and others as part of the absolute differential calculus. The concept enabled an alternative formulation of the intrinsic differential geometry of a manifold in the form of the Riemann curvature tensor.";
+    // printf("sizeof maze is %d and %d\n",sizeof(maze),strlen(maze));
+    // puts(maze);
+    // printf("\n");
+    // for(int i = 0; i < 4096; i++){
+    //     printf("%c",maze[i]);
+    // }
     // char* maze = malloc(sizeof(char));
     // int c;
     // int c = d / b;

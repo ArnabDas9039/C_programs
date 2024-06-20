@@ -26,6 +26,16 @@ long unsigned int memo_rec_fibo(int i, long unsigned int *a){
     a[i] = memo_rec_fibo(i-1, a) + memo_rec_fibo(i-2, a);
     return a[i];
 }
+
+long unsigned int tab_fibo(int n){
+    int a[n];
+    a[0] = 1;
+    a[1] = 1;
+    for(int i = 2; i < n; i++){
+        a[i] = a[i - 1] + a[i - 2];
+    }
+    return a[n-1];
+}
 int main(){
     int n = 50;
     long unsigned int a[n];
@@ -34,5 +44,6 @@ int main(){
     }
     printf("%lu\n", fibo(n));
     printf("%lu\n", memo_rec_fibo(n-1, a));
+    printf("%lu\n", tab_fibo(n));
     printf("%lu\n", rec_fibo(n));
 }

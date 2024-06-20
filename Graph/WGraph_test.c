@@ -255,39 +255,31 @@ void bellmanford(edge* vertex){
 	return;
 }
 int main(){
-	// //0
-	// addedge(0, 1, 2);
-	// addedge(0, 2, 4);
-	// //1
-	// addedge(1, 0, 2);
-	// addedge(1, 3, 7);
-    // addedge(1, 2, 1);
-	// //2
-	// addedge(2, 0, 4);
-    // addedge(2, 1, 1);
-	// addedge(2, 4, 3);
-	// //3
-	// addedge(3, 1, 7);
-	// addedge(3, 4, 2);
-	// addedge(3, 5, 1);
-	// //4
-	// addedge(4, 2, 3);
-	// addedge(4, 3, 2);
-	// addedge(4, 5, 5);
-	// //5
-	// addedge(5, 3, 1);
-	// addedge(5, 4, 5);
-	// addedge(5, 6, 1);
-	// //6
-	// addedge(6, 5, 1);
-	// display();
-
-	addedge(0,1,10);addedge(0,5,8);
-	addedge(1,3,2);
-	addedge(2,1,1);
-	addedge(3,2,-2);
-	addedge(4,1,-4);addedge(4,3,-1);
-	addedge(5,4,1);
+	//0
+	addedge(0, 1, 2);
+	addedge(0, 2, 4);
+	//1
+	addedge(1, 0, 2);
+	addedge(1, 3, 7);
+    addedge(1, 2, 1);
+	//2
+	addedge(2, 0, 4);
+    addedge(2, 1, 1);
+	addedge(2, 4, 3);
+	//3
+	addedge(3, 1, 7);
+	addedge(3, 4, 2);
+	addedge(3, 5, 1);
+	//4
+	addedge(4, 2, 3);
+	addedge(4, 3, 2);
+	addedge(4, 5, 5);
+	//5
+	addedge(5, 3, 1);
+	addedge(5, 4, 5);
+	addedge(5, 6, 1);
+	//6
+	addedge(6, 5, 1);
 	display();
 
 	// dfs(graph[0]);
